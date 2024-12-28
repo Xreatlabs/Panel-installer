@@ -32,7 +32,7 @@ These tools are required for downloading, extracting, and installing the necessa
 
 ### 1. Clone the repository or download the script
 ```bash
-git clone https://github.com/your-username/xreatlabs-installer.git
+git clone https://github.com/Xreatlabs/Panel-installer
 cd xreatlabs-installer
 
 2. Make the script executable
