@@ -3,27 +3,10 @@
 # Clear the console
 clear
 
-# XreatLabs ASCII Logo function with custom symbols
-xreatlabs_logo() {
-  clear
-  echo "============================="
-  echo "  ____  _____ _______ ______"
-  echo " |  __ \\|  __ \\__   __/ ____|"
-  echo " | |__) | |  | | | | | (___  "
-  echo " |  ___/| |  | | | |  \\___ \\ "
-  echo " | |    | |__| | | |  ____) |"
-  echo " |_|    |_____/  |_| |_____/ "
-  echo "   ____  __   __ _____ ____  "
-  echo "  / __ \\ \\ \\ / / ____/ __ \\ "
-  echo " | |  | | \\ V / (___| |  | |"
-  echo " | |  | | | |  \\___ \\ |  | |"
-  echo " | |__| | | |  ____) | |__| |"
-  echo "  \\____/  |_| |_____/ \\____/ "
-  echo "============================="
-}
-
-# Call the logo function
-xreatlabs_logo
+# Simple logo or header
+echo "============================="
+echo "XreatLabs Panel Installation"
+echo "============================="
 
 # Color codes for better visuals
 GREEN='\033[0;32m'
@@ -50,7 +33,7 @@ trap 'error "An unexpected error occurred. Exiting."; exit 1' ERR
 # Function: Check and install essential tools
 check_dependencies() {
     log "Checking essential dependencies..."
-    local dependencies=("curl" "wget" "git" "tar" "unzip" "lsb_release")
+    local dependencies=("curl" "wget" "git" "tar" "unzip" "lsb_release" "php" "composer")
     for dep in "${dependencies[@]}"; do
         if ! command -v $dep &>/dev/null; then
             warn "$dep is not installed. Installing now..."
@@ -60,16 +43,6 @@ check_dependencies() {
         fi
     done
     log "All essential dependencies are installed."
-}
-
-# Function: Confirm user action
-confirm_action() {
-    read -p "$1 (y/n): " choice
-    case "$choice" in
-        y|Y ) log "Proceeding...";;
-        n|N ) log "Operation canceled by user."; exit 0;;
-        * ) error "Invalid input. Exiting."; exit 1;;
-    esac
 }
 
 # Function: Install Node.js
@@ -95,44 +68,26 @@ install_java() {
     log "Java (Temurin JDK 21) installation completed successfully."
 }
 
-# Section 3: Install McsManager
+# Function: Install McsManager
 install_mcsmanager() {
     log "Installing McsManager..."
     wget https://github.com/MCSManager/MCSManager/releases/latest/download/mcsmanager_linux_release.tar.gz
     tar -zxf mcsmanager_linux_release.tar.gz
-    cd /mcsmanager
-
+    cd mcsmanager
     log "Installing dependencies for daemon..."
-    cd /mcsmanager/daemon
-    npm install
-
-    log "Installing dependencies for web..."
-    cd /mcsmanager/web
-    npm install
-
-    log "McsManager installation completed. Follow the instructions below:"
-    echo -e "\n#######################################"
-    echo "# To start McsManager:                #"
-    echo "# 1. Open Terminal 1 and run:         #"
-    echo "#    cd /mcsmanager                   #"
-    echo "#    ./start-daemon.sh                #"
-    echo "#                                     #"
-    echo "# 2. Open Terminal 2 and run:         #"
-    echo "#    cd /mcsmanager                   #"
-    echo "#    ./start-web.sh                   #"
-    echo "#                                     #"
-    echo "# Then access the panel in your browser. It will be on localhost:23333 and the daemon will be localhost:24444"
-    echo "#######################################"
+    cd daemon && npm install
+    cd ../web && npm install
+    log "McsManager installation completed. Start it by running start-daemon.sh and start-web.sh."
 }
 
-# Section 5: Install PufferPanel without Docker
+# Function: Install PufferPanel without Docker
 install_pufferpanel_no_docker() {
     log "Installing PufferPanel without Docker..."
     bash <(curl -s https://raw.githubusercontent.com/PufferPanel/PufferPanel/main/deploy.sh)
     log "PufferPanel installed successfully without Docker."
 }
 
-# Section 6: Install Ctrl Panel
+# Function: Install Ctrl Panel
 install_ctrl_panel() {
     log "Installing Ctrl Panel..."
     sudo apt update && sudo apt install -y apache2 mysql-server php php-fpm
@@ -142,7 +97,7 @@ install_ctrl_panel() {
     log "Ctrl Panel installation completed."
 }
 
-# Section 7: Install Jexactyl
+# Function: Install Jexactyl
 install_jexactyl() {
     log "Installing Jexactyl..."
     mkdir -p /var/www/jexactyl
@@ -156,18 +111,54 @@ install_jexactyl() {
     log "Jexactyl installation completed."
 }
 
-# Section 8: Install Pterodactyl Official Panel
+# Function: Install Pterodactyl Official Panel
 install_pterodactyl_panel_official() {
     log "Installing Pterodactyl Official Panel..."
     bash <(curl -s https://pterodactyl-installer.se)
     log "Pterodactyl Official Panel installed."
 }
 
-# Section 9: Install Pterodactyl Official Node
+# Function: Install Pterodactyl Official Node
 install_pterodactyl_node_official() {
     log "Installing Pterodactyl Official Node..."
     bash <(curl -s https://pterodactyl-installer.se/node.sh)
     log "Pterodactyl Official Node installed."
+}
+
+# Function: Install Skyport Panel
+install_skyport_panel() {
+    log "Installing Skyport Panel..."
+    git clone https://github.com/achul123/panel5.git /opt/skyport-panel
+    cd /opt/skyport-panel || exit
+    ./install.sh
+    log "Skyport Panel installation completed."
+}
+
+# Function: Install Skyport Daemon
+install_skyport_daemon() {
+    log "Installing Skyport Daemon..."
+    git clone https://github.com/achul123/skyportd.git /opt/skyport-daemon
+    cd /opt/skyport-daemon || exit
+    ./install.sh
+    log "Skyport Daemon installation completed."
+}
+
+# Function: Install Airlink Panel
+install_airlink_panel() {
+    log "Installing Airlink Panel..."
+    git clone https://github.com/airlinklabs/panel.git /opt/airlink-panel
+    cd /opt/airlink-panel || exit
+    ./install.sh
+    log "Airlink Panel installation completed."
+}
+
+# Function: Install Airlink Daemon
+install_airlink_daemon() {
+    log "Installing Airlink Daemon..."
+    git clone https://github.com/airlinklabs/daemon.git /opt/airlink-daemon
+    cd /opt/airlink-daemon || exit
+    ./install.sh
+    log "Airlink Daemon installation completed."
 }
 
 # Menu options
@@ -176,26 +167,32 @@ while true; do
     echo "1) Install Node.js"
     echo "2) Install Java (Temurin JDK 21)"
     echo "3) Install McsManager"
-    echo "4) Install PufferPanel with Docker"
-    echo "5) Install PufferPanel without Docker"
-    echo "6) Install Ctrl Panel"
-    echo "7) Install Jexactyl"
-    echo "8) Install Pterodactyl Official Panel"
-    echo "9) Install Pterodactyl Official Node"
-    echo "10) Exit"
-    read -p "Enter your choice [1-10]: " choice
+    echo "4) Install PufferPanel without Docker"
+    echo "5) Install Ctrl Panel"
+    echo "6) Install Jexactyl"
+    echo "7) Install Pterodactyl Official Panel"
+    echo "8) Install Pterodactyl Official Node"
+    echo "9) Install Skyport Panel"
+    echo "10) Install Skyport Daemon"
+    echo "11) Install Airlink Panel"
+    echo "12) Install Airlink Daemon"
+    echo "13) Exit"
+    read -p "Enter your choice [1-13]: " choice
 
     case $choice in
     1) install_nodejs ;;
     2) install_java ;;
     3) install_mcsmanager ;;
-    4) install_pufferpanel_docker ;;
-    5) install_pufferpanel_no_docker ;;
-    6) install_ctrl_panel ;;
-    7) install_jexactyl ;;
-    8) install_pterodactyl_panel_official ;;
-    9) install_pterodactyl_node_official ;;
-    10) log "Exiting script. Goodbye!"; exit 0 ;;
+    4) install_pufferpanel_no_docker ;;
+    5) install_ctrl_panel ;;
+    6) install_jexactyl ;;
+    7) install_pterodactyl_panel_official ;;
+    8) install_pterodactyl_node_official ;;
+    9) install_skyport_panel ;;
+    10) install_skyport_daemon ;;
+    11) install_airlink_panel ;;
+    12) install_airlink_daemon ;;
+    13) log "Exiting script. Goodbye!"; exit 0 ;;
     *) error "Invalid choice. Please try again." ;;
     esac
 done
