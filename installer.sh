@@ -3,12 +3,10 @@
 # Clear the console
 clear
 
-# Simple logo or header
 echo "============================="
 echo "XreatLabs Panel Installation"
 echo "============================="
 
-# Color codes for better visuals
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
