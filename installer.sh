@@ -12,7 +12,6 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-# Log functions
 log() {
     echo -e "${GREEN}[INFO] $(date +'%Y-%m-%d %H:%M:%S') - $1${NC}"
 }
@@ -25,10 +24,8 @@ error() {
     echo -e "${RED}[ERROR] $(date +'%Y-%m-%d %H:%M:%S') - $1${NC}"
 }
 
-# Exit script on error
 trap 'error "An unexpected error occurred. Exiting."; exit 1' ERR
 
-# Function: Check and install essential tools
 check_dependencies() {
     log "Checking essential dependencies..."
     local dependencies=("curl" "wget" "git" "tar" "unzip" "lsb_release" "php" "composer")
@@ -43,7 +40,6 @@ check_dependencies() {
     log "All essential dependencies are installed."
 }
 
-# Function: Install Node.js
 install_nodejs() {
     log "Installing Node.js with nvm..."
     if ! command -v nvm &>/dev/null; then
@@ -55,7 +51,6 @@ install_nodejs() {
     node -v && npm -v && log "Node.js installed successfully."
 }
 
-# Function: Install Java (Temurin JDK 21)
 install_java() {
     log "Installing Java (Temurin JDK 21)..."
     sudo apt install -y wget apt-transport-https gpg
@@ -66,7 +61,6 @@ install_java() {
     log "Java (Temurin JDK 21) installation completed successfully."
 }
 
-# Function: Install McsManager
 install_mcsmanager() {
     log "Installing McsManager..."
     wget https://github.com/MCSManager/MCSManager/releases/latest/download/mcsmanager_linux_release.tar.gz
@@ -78,14 +72,12 @@ install_mcsmanager() {
     log "McsManager installation completed. Start it by running start-daemon.sh and start-web.sh."
 }
 
-# Function: Install PufferPanel without Docker
 install_pufferpanel_no_docker() {
     log "Installing PufferPanel without Docker..."
     bash <(curl -s https://raw.githubusercontent.com/PufferPanel/PufferPanel/main/deploy.sh)
     log "PufferPanel installed successfully without Docker."
 }
 
-# Function: Install Ctrl Panel
 install_ctrl_panel() {
     log "Installing Ctrl Panel..."
     sudo apt update && sudo apt install -y apache2 mysql-server php php-fpm
@@ -95,7 +87,6 @@ install_ctrl_panel() {
     log "Ctrl Panel installation completed."
 }
 
-# Function: Install Jexactyl
 install_jexactyl() {
     log "Installing Jexactyl..."
     mkdir -p /var/www/jexactyl
@@ -109,21 +100,18 @@ install_jexactyl() {
     log "Jexactyl installation completed."
 }
 
-# Function: Install Pterodactyl Official Panel
 install_pterodactyl_panel_official() {
     log "Installing Pterodactyl Official Panel..."
     bash <(curl -s https://pterodactyl-installer.se)
     log "Pterodactyl Official Panel installed."
 }
 
-# Function: Install Pterodactyl Official Node
 install_pterodactyl_node_official() {
     log "Installing Pterodactyl Official Node..."
     bash <(curl -s https://pterodactyl-installer.se/node.sh)
     log "Pterodactyl Official Node installed."
 }
 
-# Function: Install Skyport Panel
 install_skyport_panel() {
     log "Installing Skyport Panel..."
     git clone https://github.com/achul123/panel5.git /opt/skyport-panel
@@ -132,7 +120,6 @@ install_skyport_panel() {
     log "Skyport Panel installation completed."
 }
 
-# Function: Install Skyport Daemon
 install_skyport_daemon() {
     log "Installing Skyport Daemon..."
     git clone https://github.com/achul123/skyportd.git /opt/skyport-daemon
@@ -141,7 +128,6 @@ install_skyport_daemon() {
     log "Skyport Daemon installation completed."
 }
 
-# Function: Install Airlink Panel
 install_airlink_panel() {
     log "Installing Airlink Panel..."
     git clone https://github.com/airlinklabs/panel.git /opt/airlink-panel
@@ -150,7 +136,6 @@ install_airlink_panel() {
     log "Airlink Panel installation completed."
 }
 
-# Function: Install Airlink Daemon
 install_airlink_daemon() {
     log "Installing Airlink Daemon..."
     git clone https://github.com/airlinklabs/daemon.git /opt/airlink-daemon
