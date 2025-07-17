@@ -55,7 +55,7 @@ After launching the script, you'll see an interactive menu:
 7) Install Jexactyl
 8) Install Multiple Components
 9) Exit
-Select an option to begin installation. For multiple components, choose option 8 and select numbers separated by spaces (e.g., "1 3 5").
+Select an option to begin installation. For multiple components, choose option 8 and select numbers separated by spaces (e.g., "1 3 5").'''
 
 ⚙️ Configuration
 Most panels will prompt for required configuration during installation. The script handles:
