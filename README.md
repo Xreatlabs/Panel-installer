@@ -1,76 +1,45 @@
-# XreatLabs Installer Script
+# XreatLabs Panel Installer
 
-This script is designed to simplify the installation process for several server management panels, including **McsManager**, **PufferPanel**, **Ctrl Panel**, **Jexactyl**, and **Pterodactyl**. It also includes essential tools like **Node.js** and **Java (Temurin JDK 21)**.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Xreatlabs/.github/main/profile/xreatlabs-logo-dark.png" alt="XreatLabs Logo" width="300">
+</p>
 
-## Features
+*A powerful, multi-panel installation script for game server management*
 
-- Easy installation of the following panels:
-  - McsManager
-  - PufferPanel (with and without Docker)
-  - Ctrl Panel
-  - Jexactyl
-  - Pterodactyl Official Panel and Node
-- Installs required dependencies like **curl**, **wget**, **git**, **Node.js**, and **Java (Temurin JDK 21)**.
-- Clean and organized logging for easier debugging and monitoring.
-- ASCII logo display for XreatLabs branding.
+## 📝 Description
 
-## Prerequisites
+The XreatLabs Panel Installer is an advanced bash script that simplifies the installation of various game server control panels and their dependencies. This tool is designed for Linux system administrators and hosting providers who need to quickly deploy management panels for game servers.
 
-Before running the script, make sure you have a **Linux-based** server (preferably Ubuntu) with `sudo` access.
+## 🌟 Features
 
-The following tools must be installed:
-- **curl**
-- **wget**
-- **git**
-- **tar**
-- **unzip**
-- **lsb_release**
+- **Multiple Panel Support**: Install various popular game server control panels
+- **Dependency Management**: Automatically handles required dependencies
+- **Retry Logic**: Automatically retries failed installations
+- **Bulk Installation**: Install multiple components in one operation
+- **Detailed Logging**: Comprehensive installation logs for troubleshooting
+- **User-Friendly Menu**: Interactive console interface
+- **Service Integration**: Proper systemd service setup where applicable
 
-These tools are required for downloading, extracting, and installing the necessary components. The script will attempt to install missing dependencies automatically.
+## 📋 Supported Panels & Components
 
-## Usage
+1. **Node.js** (with NVM)
+2. **Java** (Temurin JDK)
+3. **MCSManager** (Minecraft Server Manager)
+4. **PufferPanel** (without Docker)
+5. **Pterodactyl Panel** (Official)
+6. **Pterodactyl Node** (Official)
+7. **Jexactyl** (Pterodactyl fork)
 
-### 1. Clone the repository or download the script
+## 🚀 Installation
+
+### Prerequisites
+- Ubuntu/Debian based Linux system (recommended)
+- sudo privileges
+- Internet connection
+
+### Quick Start
 ```bash
-git clone https://github.com/Xreatlabs/Panel-installer
-cd xreatlabs-installer
-
-2. Make the script executable
-
-chmod +x install.sh
-
-3. Run the script
-
-./install.sh
-
-You will be presented with a menu of options. Choose the desired installation option by entering the corresponding number:
-
-1) Install Node.js
-2) Install Java (Temurin JDK 21)
-3) Install McsManager
-4) Install PufferPanel with Docker
-5) Install PufferPanel without Docker
-6) Install Ctrl Panel
-7) Install Jexactyl
-8) Install Pterodactyl Official Panel
-9) Install Pterodactyl Official Node
-10) Exit
-
-4. Follow on-screen instructions
-
-Each installation option will provide additional instructions after it completes. For example, for McsManager, you will be told to start the daemon and web servers in separate terminals.
-
-Troubleshooting
-
-Missing dependencies: If the script encounters missing dependencies during installation, it will attempt to install them automatically. If this fails, you may need to manually install missing packages.
-
-Permissions issues: Make sure you have sudo privileges to install the necessary software. If you're running the script as a non-root user, you may need to prefix commands with sudo.
-
-
-License
-
-This script is open-source and available under the MIT License.
-
-Support
-
-For issues, suggestions, or questions, feel free to open an issue in the GitHub repository or contact us at support@xreatlabs.com.
+git clone https://github.com/Xreatlabs/Panel-installer.git
+cd Panel-installer
+chmod +x installer.sh
+sudo ./installer.sh
